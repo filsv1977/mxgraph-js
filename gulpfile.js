@@ -66,3 +66,7 @@ gulp.task('deploy', function() {
         console.log(err);
     });
 });
+
+
+gulp.task('build', gulp.series('clean:dist', "usemin", "webpack"));
+gulp.task('dep', gulp.series('deploy'));
