@@ -6,7 +6,7 @@
  * Class: mxStylesheetCodec
  *
  * Codec for <mxStylesheet>s. This class is created and registered
- * dynamically at load time and used implicitely via <mxCodec>
+ * dynamically at load time and used implicitly via <mxCodec>
  * and the <mxCodecRegistry>.
  */
 var mxStylesheetCodec = mxCodecRegistry.register(function()
@@ -66,7 +66,7 @@ var mxStylesheetCodec = mxCodecRegistry.register(function()
 		
 		if (type == 'function')
 		{
-			value = mxStyleRegistry.getName(style[j]);
+			value = mxStyleRegistry.getName(value);
 		}
 		else if (type == 'object')
 		{
@@ -215,5 +215,3 @@ var mxStylesheetCodec = mxCodecRegistry.register(function()
  * may contain user input.
  */
 mxStylesheetCodec.allowEval = true;
-
-exports.mxStylesheetCodec = mxStylesheetCodec;

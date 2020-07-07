@@ -120,6 +120,16 @@ mxSelectionCellsHandler.prototype.getHandler = function(cell)
 };
 
 /**
+ * Function: isHandled
+ * 
+ * Returns true if the given cell has a handler.
+ */
+mxSelectionCellsHandler.prototype.isHandled = function(cell)
+{
+	return this.getHandler(cell) != null;
+};
+
+/**
  * Function: reset
  * 
  * Resets all handlers.
@@ -130,6 +140,16 @@ mxSelectionCellsHandler.prototype.reset = function()
 	{
 		handler.reset.apply(handler);
 	});
+};
+
+/**
+ * Function: getHandledSelectionCells
+ * 
+ * Reloads or updates all handlers.
+ */
+mxSelectionCellsHandler.prototype.getHandledSelectionCells = function()
+{
+	return this.graph.getSelectionCells();
 };
 
 /**
@@ -144,7 +164,7 @@ mxSelectionCellsHandler.prototype.refresh = function()
 	this.handlers = new mxDictionary();
 	
 	// Creates handles for all selection cells
-	var tmp = this.graph.getSelectionCells();
+	var tmp = mxUtils.sortCells(this.getHandledSelectionCells(), false);
 
 	for (var i = 0; i < tmp.length; i++)
 	{
@@ -161,7 +181,7 @@ mxSelectionCellsHandler.prototype.refresh = function()
 					handler.destroy();
 					handler = null;
 				}
-				else
+				else if (!this.isHandlerActive(handler))
 				{
 					if (handler.refresh != null)
 					{
@@ -194,6 +214,16 @@ mxSelectionCellsHandler.prototype.refresh = function()
 };
 
 /**
+ * Function: isHandlerActive
+ * 
+ * Returns true if the given handler is active and should not be redrawn.
+ */
+mxSelectionCellsHandler.prototype.isHandlerActive = function(handler)
+{
+	return handler.index != null;
+};
+
+/**
  * Function: updateHandler
  * 
  * Updates the handler for the given shape if one exists.
@@ -204,12 +234,22 @@ mxSelectionCellsHandler.prototype.updateHandler = function(state)
 	
 	if (handler != null)
 	{
+		// Transfers the current state to the new handler
+		var index = handler.index;
+		var x = handler.startX;
+		var y = handler.startY;
+		
 		handler.destroy();
 		handler = this.graph.createHandler(state);
-		
+
 		if (handler != null)
 		{
 			this.handlers.put(state.cell, handler);
+			
+			if (index != null && x != null && y != null)
+			{
+				handler.start(x, y, index);
+			}
 		}
 	}
 };
@@ -285,5 +325,3 @@ mxSelectionCellsHandler.prototype.destroy = function()
 		this.refreshHandler = null;
 	}
 };
-
-exports.mxSelectionCellsHandler = mxSelectionCellsHandler;

@@ -65,7 +65,7 @@ mxImageBundle.prototype.images = null;
  * 
  * Specifies if the fallback representation should be returned.
  */
-mxImageBundle.prototype.images = null;
+mxImageBundle.prototype.alt = null;
 
 /**
  * Function: putImage
@@ -101,5 +101,3 @@ mxImageBundle.prototype.getImage = function(key)
 	
 	return result;
 };
-
-exports.mxImageBundle = mxImageBundle;

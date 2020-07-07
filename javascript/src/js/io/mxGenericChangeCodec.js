@@ -7,7 +7,7 @@
  *
  * Codec for <mxValueChange>s, <mxStyleChange>s, <mxGeometryChange>s,
  * <mxCollapseChange>s and <mxVisibleChange>s. This class is created
- * and registered dynamically at load time and used implicitely
+ * and registered dynamically at load time and used implicitly
  * via <mxCodec> and the <mxCodecRegistry>.
  *
  * Transient Fields:
@@ -62,5 +62,3 @@ mxCodecRegistry.register(mxGenericChangeCodec(new mxGeometryChange(), 'geometry'
 mxCodecRegistry.register(mxGenericChangeCodec(new mxCollapseChange(), 'collapsed'));
 mxCodecRegistry.register(mxGenericChangeCodec(new mxVisibleChange(), 'visible'));
 mxCodecRegistry.register(mxGenericChangeCodec(new mxCellAttributeChange(), 'value'));
-
-exports.mxGenericChangeCodec = mxGenericChangeCodec;
